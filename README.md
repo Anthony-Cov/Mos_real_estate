@@ -1,10 +1,10 @@
-## Apartment price and demand forecast
+# Apartment price and demand forecast
 Набор Python-скриптов для оценки квартир в Москве с учётом долгосрочной (до 2 лет) перспективы.
 Back-end для Интеллектуальной системы мониторинга и рекомендаций по формированию стоимости квартир в домах, 
 построенных в рамках реализации Программы реновации.
 (Упрощенный вариант 2.2)
 
-# 1. Комплект поставки.
+## 1. Комплект поставки.
 
 M_Price.py - прогнозирование/эксплуатация с запросом API
 reservoir_model.py - процедуры для прогнозирования индекса цен на горизонт до 105 недель. 
@@ -28,7 +28,7 @@ ______________
 **) https://www.moex.com/ru/index/MREDC/archive?from=2025-01-26&till=2025-02-26&sort=TRADEDATE&order=desc
 
 
-# 2. Импорты - зависимости.
+## 2. Импорты - зависимости.
 	Python.3.10
 		time
 		pickle
@@ -39,7 +39,7 @@ ______________
 	sklearn 1.5.2
  	flask 3.1.0
 
-# 3. Входные данные.
+## 3. Входные данные.
 Входные данные передаются в запросе следующим образом:
 https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602
 где<BR>
@@ -58,7 +58,7 @@ https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&plan
  	}
 
 
-# 4. Запрос API.
+## 4. Запрос API.
 
 Пример кода для формирования запроса:<BR>
 
@@ -80,7 +80,7 @@ https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&plan
 'https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602'
 Образец выполнения в прилагаемом файле start.ipynb
 
-# 5. Ответ API.
+## 5. Ответ API.
 json вида<BR>
 
 	{
