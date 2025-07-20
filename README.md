@@ -41,7 +41,7 @@ ______________
 
 ## 3. Входные данные.
 Входные данные передаются в запросе следующим образом:
-https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602
+https://127.0.0.1:5000/price?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602
 где<BR>
 	
  	{
@@ -75,9 +75,9 @@ https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&plan
     	'lon':37.398552745, # долгота
     	'lat':55.830326602 # широта
 	}
-	url = 'https://127.0.0.1:5000?'+urlencode(param)<BR>
+	url = 'https://127.0.0.1:5000/price?'+urlencode(param)<BR>
 
-'https://127.0.0.1:5000?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602'
+'https://127.0.0.1:5000/price?horizon=2&planchers_tot=56&height=179.9&souterrain=2&planchers_sur=54&n_app=450&superficie_tot=38910&espace_de_vie=22301.0&lon=37.398552745&lat=55.830326602'
 Образец выполнения в прилагаемом файле start.ipynb
 
 ## 5. Ответ API.
