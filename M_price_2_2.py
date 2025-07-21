@@ -10,7 +10,7 @@ from os.path import exists, getmtime
 
 from src.reservoir_model import forecast_index
 from src.index_grab import download_moex_data, data_preprocessing
-from pymssa import MSSA
+from src.pymssa import MSSA
 
 app = Flask(__name__)
 
