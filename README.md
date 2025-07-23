@@ -112,7 +112,7 @@ http://127.0.0.1:5000/demand?lon=37.65596415&lat=55.625664549999996&year=2026&mo
 	url= 'http://127.0.0.1:5000/demand?'+urlencode(param)
 http://127.0.0.1:5000/demand?lon=37.592144149999996&lat=55.750886550000004&year=2026&month=7 <BR>
 
-Образец выполнения в прилагаемом файле start.ipynb <BR>
+Образец выполнения в прилагаемом файле <A href='https://github.com/Anthony-Cov/Mos_real_estate/blob/main/start.ipynb'>start.ipynb</A>. <BR>
 
 ## 5. Ответ API.
 <B>Для прогноза цены:</B><BR>
