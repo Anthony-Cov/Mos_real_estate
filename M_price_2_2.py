@@ -22,6 +22,7 @@ def proximity(coord, obj): #Евклидова близость по коорд�
 @app.route("/price")
 def price():
     resp='Okay'
+    code=0
     horizon = float(request.args.get("horizon"))
     planchers_tot=int(request.args.get("planchers_tot"))
     height=float(request.args.get('height')) # высота обхекта (м)
@@ -35,6 +36,7 @@ def price():
 
     if horizon not in [0., 0.25, 0.5, 0.75, 1.0, 1.25, 1.5,1.75, 2.0]:
         resp="Whong value for horizon %.2f, changed to 0.0"%horizon
+        code=-1
         horizon=0.
 
     data=[[planchers_tot,height,souterrain,planchers_sur,n_app,superficie_tot, espace_de_vie,lon,lat]]                  
@@ -63,6 +65,7 @@ def price():
     
     if (uins['highratio'].values[0]>5.)|(uins['highratio'].values[0]<2.):
         resp='Doubtfull number of storey (%i) for this height %.1f m.'%(planchers_sur, height)
+        code=-2
     
     #Проверяем и обновляем базу индексов для прогноза:
     ifn=datadir+'dom_index.csv'
@@ -81,6 +84,7 @@ def price():
             processed_data.to_csv(ifn, index=False)
         else:
             resp='Can\'t predict price index. No data ' + ifn + ' Set horizon = 0.0'
+            code=-3
             horizon=0.
 
     # прогнозируем индекс:
@@ -91,6 +95,7 @@ def price():
         
     if (index>3)|(index<.99):
         resp='Predicted price index looks doubtful: %.3f'%index
+        code=-4
 
     #Набор фичей для модели уточняется, для прилагаемой он таков:
     #planchers_sur superficie_tot lon lat metroprox liveratio highratio
@@ -110,7 +115,8 @@ def price():
     fname=resdir+'prognose_'+time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime())+'.xlsx'
     result.to_excel(fname, index=False)
 
-    return jsonify({'response': resp,
+    return jsonify({'code':code,
+                    'response': resp,
                     'lat': lat,
                     'lon': lon,
                     'pricemetr': round(y_pred[0]*1000, 2),
@@ -121,6 +127,7 @@ def price():
 @app.route("/demand")
 def demand():
     resp='Okay'
+    code=0
     datadir='data/'
     #district = str(request.args.get("district"))
     lon=float(request.args.get('lon')) # долгота
@@ -140,14 +147,17 @@ def demand():
     deals['class'] = np.digitize(deals['Площадь квартиры'], bins=bins, right=True)
     if district in deals.Район.unique():
         nsales=deals[deals.Район==district].groupby(['month', 'class'])['Дата регистрации'].count().unstack().fillna(0).rolling(3).mean().dropna()
-        respond='Okay'
+        resp='Okay'
+        code=0
     else:
         nsales=deals.groupby(['month', 'class'])['Дата регистрации'].count().unstack().fillna(0).rolling(3).mean().dropna()
-        respond=f'District {district} is not in train data. Forecast on average'
+        resp=f'District {district} is not in train data. Forecast on average'
+        code=-1
     nsales=(nsales.T/nsales.sum(axis=1).values).T
     if len(nsales)<24:
         nsales=deals.groupby(['month', 'class'])['Дата регистрации'].count().unstack().fillna(0).rolling(3).mean().dropna()
-        respond=f'Not enough train data for {district}. Forecast on average'
+        resp=f'Not enough train data for {district}. Forecast on average'
+        code=-1
     nsales=(nsales.T/nsales.sum(axis=1).values).T    
     mssa = MSSA(n_components=12,
             window_size=12,
@@ -159,7 +169,7 @@ def demand():
     fc = mssa.forecast(horizon)
     fc=np.where(fc<0,  0., fc)
     result=(fc/fc.sum(axis=0))[:, -1].round(2)
-    a={'district':district, 'date':f'{year}-{str(month).zfill(2)}-01', 'respond':respond}
+    a={'district':district, 'date':f'{year}-{str(month).zfill(2)}-01', 'code': code, 'response':resp}
     a.update(dict(zip(['1','2','3','4'], result)))
     print(a)
     return jsonify(a)
