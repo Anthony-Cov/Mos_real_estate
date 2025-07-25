@@ -96,6 +96,13 @@ def price():
     if (index>3)|(index<.99):
         resp='Predicted price index looks doubtful: %.3f'%index
         code=-4
+            
+    # Официальная инфляциея по Распоряжению Департамента экономической политики и развития города Москвы № ДПР-Р-34.24 28.12.2024
+    # Об утверждении прогнозных коэффициентов инфляции на 2025–2027 годы (с фактическими коэффициентами инфляции за период с 2023 по 2024 годы (по состоянию на 20.12.2024)) 
+    infl_off=pd.read_csv(datadir+'inflatio.csv', parse_dates=[0]).set_index('date', drop=True)
+    i=pd.to_datetime(time.strftime('%Y-%m-%d', time.localtime()))+pd.Timedelta(f'{int(horizon*365)}D')
+    j=str(i.year)+'-'+str(i.month).zfill(2)+'-01'
+    official=infl_off.loc[j,'infl']
 
     #Набор фичей для модели уточняется, для прилагаемой он таков:
     #planchers_sur superficie_tot lon lat metroprox liveratio highratio
@@ -115,13 +122,16 @@ def price():
     fname=resdir+'prognose_'+time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime())+'.xlsx'
     result.to_excel(fname, index=False)
 
-    return jsonify({'code':code,
-                    'response': resp,
+    return jsonify({'response': resp,
+                    'code': code,
                     'lat': lat,
                     'lon': lon,
                     'pricemetr': round(y_pred[0]*1000, 2),
                     'price_index': round(index, 3),
+                    'official':official,
                     'forecast_horizon': horizon,
+                    'f_year':i.year,
+                    'f_month':i.month,
                     'file_name':fname })
 
 @app.route("/demand")
