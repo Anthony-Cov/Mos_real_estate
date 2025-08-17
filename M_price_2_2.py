@@ -23,6 +23,7 @@ def proximity(coord, obj): #Евклидова близость по коорд�
 def price():
     resp='Okay'
     code=0
+    modname='GBoost25.pkl' #обучена на данных до 2025-06-30
     horizon = float(request.args.get("horizon"))
     planchers_tot=int(request.args.get("planchers_tot"))
     height=float(request.args.get('height')) # высота обхекта (м)
@@ -111,7 +112,7 @@ def price():
              #'liveratio', 'highratio',
              'industrprox','medprox', 'kidprox', 'schoolprox', 'cemetprox', 'rwprox',
            ], axis=1).dropna()             
-    with open('src/GBoost.pkl', 'rb') as f:
+    with open('src/'+modname, 'rb') as f:
         model = pickle.load(f) #Обученная модель
     y_pred=model.predict(Xy)*index
     lat, lon = uins[['lat', 'lon']].values[0]
@@ -186,3 +187,4 @@ def demand():
 
 if __name__=='__main__':
     app.run(debug=True) #, ssl_context='adhoc')
+
