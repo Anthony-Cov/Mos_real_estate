@@ -188,8 +188,8 @@ class ReservoirComputing:
     # Back to real from log and get coef
     def back_to_real_and_coef(self, loged_array, last_train_idx):
         to_real = np.exp(loged_array.cumsum() + np.log(self.init_value))
-        k = to_real[-1] / 300228.6 # Данные за 18 декабря 2024 - базовый уровень. to_real[last_train_idx]
-
+        k = to_real[-1]/307418.56 # Данные за 2025-06-25
+                        # 300228.6 Данные за 18 декабря 2024 - базовый уровень. to_real[last_train_idx]
         return to_real, k
 
 def forecast_index(datadir='data/dom_index.csv', forecast=52, path_to_weights=None): 
