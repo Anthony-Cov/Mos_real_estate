@@ -150,7 +150,7 @@ def demand():
     _, n=proximity((lat, lon), distr_coord)
     district=distr_coord.loc[n,'Район']
     
-    deals=pd.read_csv(datadir+'d_amt.csv', parse_dates=[0])
+    deals=pd.read_csv(datadir+'d_amt25.csv', parse_dates=[0])
     #deals.drop(deals[deals['Дата регистрации']<='2021-07-01'].index, inplace=True)
     deals.drop(deals[deals['Дата регистрации']>'2024-07-01'].index, inplace=True)
     deals['month']=pd.to_datetime(deals['Дата регистрации'].dt.year.astype(str)+'-'+deals['Дата регистрации'].dt.month.astype(str).str.zfill(2)+'-01')
@@ -187,4 +187,5 @@ def demand():
 
 if __name__=='__main__':
     app.run(debug=True) #, ssl_context='adhoc')
+
 
