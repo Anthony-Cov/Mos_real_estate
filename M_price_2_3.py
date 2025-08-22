@@ -118,7 +118,7 @@ def price():
     lat, lon = uins[['lat', 'lon']].values[0]
     price_pure=round(y_pred[0]*1000, 2)
     result=pd.DataFrame(data=[[lat, lon, planchers_tot, superficie_tot, espace_de_vie, horizon, round(official, 3), round(index, 3), 
-                               price_pure, price_pure*index, price_pure*official, resp]], 
+                               price_pure, round(price_pure*index,2), round(price_pure*official,2), resp]], 
                         columns=['Широта', 'Долгота', 'количество этажей всего','общая площпдь объекта','жилая площадь объекта',
                                  'Горизонт прогноза','Индекс официальный','Индекс Домклик',
                                  'Цена за метр на 2кв. 2025 (тыр)','Цена за метр по Домклик','Цена за метр по официальной','Примечание'])
@@ -193,5 +193,6 @@ def demand():
 
 if __name__=='__main__':
     app.run(debug=True) #, ssl_context='adhoc')
+
 
 
