@@ -113,8 +113,8 @@ http://127.0.0.1:5000/demand?lon=37.65596415&lat=55.625664549999996&year=2026&mo
 	from urllib.parse import urlencode
 	lon, lat = 37.592144149999996, 55.750886550000004
 	param={
-    		'lon':lat, # долгота 
-   		 	'lat':lon, # широта 
+    		'lon':lon, # долгота 
+   		 	'lat':lat, # широта 
     		'year':2026, # прогнозируемый год
    		 	'month':7, # прогнозируемый месяц
 		}
