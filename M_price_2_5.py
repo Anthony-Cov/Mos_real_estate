@@ -24,7 +24,7 @@ def proximity(coord, obj): #Евклидова близость по коорд�
 def price():
     resp='Okay'
     code=0
-    modname='GBoost25_2.pkl' #обучена на данных до 2025-06-30 с центром и парковками
+    modname='GBoost25_2c.pkl' #обучена на данных до 2025-06-30 с центром и парковками
     hor=float(request.args.get("horizon"))
     planchers_tot=int(request.args.get("planchers_tot"))
     height=float(request.args.get('height')) # высота обхекта (м)
@@ -224,6 +224,7 @@ def demand():
 
 if __name__=='__main__':
     app.run(debug=True) #, ssl_context='adhoc')
+
 
 
 
