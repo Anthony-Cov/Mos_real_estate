@@ -68,7 +68,7 @@ def price():
     RSK=15.6/2/np.pi #радиус Садового кольца
     POKROVA_NA_RVU = pd.DataFrame({'lat':[55.7524], 'lon': [37.6231]}) #Координаты Покрова на рву - центр.
     uins['center']=[proximity(x, POKROVA_NA_RVU)[0] for x in uins[['lat', 'lon']].values]
-    uins['center']=np.where(uins['center'].values < RSK, 1, 0)
+    #uins['center']=np.where(uins['center'].values < RSK, 1, 0) #22.12.2025
     if (uins['highratio'].values[0]>5.)|(uins['highratio'].values[0]<2.):
         resp='Doubtfull number of storey (%i) for this height %.1f m.'%(planchers_sur, height)
         code=-2
@@ -130,6 +130,7 @@ def price():
     y_pred=model.predict(Xy) #*index
     lat, lon = uins[['lat', 'lon']].values[0]
     price_pure=round(y_pred[0]*1000, 2)*today_index
+    uins['center']=np.where(uins['center'].values < RSK, 1, 0) #22.12.2025
     result=pd.DataFrame({'Горизонт прогноза':horizon,
                          'Дата': j,
                          'Широта':[lat]*len(horizon),
@@ -223,6 +224,7 @@ def demand():
 
 if __name__=='__main__':
     app.run(debug=True) #, ssl_context='adhoc')
+
 
 
 
